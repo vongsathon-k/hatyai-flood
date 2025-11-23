@@ -29,6 +29,7 @@ export default async function handler(
         lat: req.lat,
         lng: req.lng,
         imageUrl: req.imageUrl,
+        status: req.status || 'pending',
         timestamp: req.timestamp,
       }));
       return res.status(200).json(formattedRequests);

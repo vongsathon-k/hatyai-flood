@@ -9,6 +9,7 @@ export interface RescueRequest {
   lng: number;
   timestamp: string;
   imageUrl?: string;
+  status: 'pending' | 'completed';
 }
 
 // Create axios instance
@@ -27,5 +28,10 @@ export const submitRequest = async (data: FormData) => {
 
 export const getRequests = async (): Promise<RescueRequest[]> => {
   const response = await api.get("/requests");
+  return response.data;
+};
+
+export const updateRequestStatus = async (id: string, status: 'pending' | 'completed') => {
+  const response = await api.put(`/requests/${id}`, { status });
   return response.data;
 };

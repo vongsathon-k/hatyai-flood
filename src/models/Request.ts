@@ -7,6 +7,7 @@ export interface IRequest extends mongoose.Document {
   lat: number;
   lng: number;
   imageUrl?: string;
+  status: 'pending' | 'completed';
   timestamp: Date;
 }
 
@@ -25,14 +26,19 @@ const RequestSchema = new mongoose.Schema<IRequest>({
   },
   lat: {
     type: Number,
-    required: true,
+    required: [true, "Please provide latitude"],
   },
   lng: {
     type: Number,
-    required: true,
+    required: [true, "Please provide longitude"],
   },
   imageUrl: {
     type: String,
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'completed'],
+    default: 'pending',
   },
   timestamp: {
     type: Date,
@@ -40,5 +46,4 @@ const RequestSchema = new mongoose.Schema<IRequest>({
   },
 });
 
-export default mongoose.models.Request ||
-  mongoose.model<IRequest>("Request", RequestSchema);
+export default mongoose.models.Request || mongoose.model<IRequest>("Request", RequestSchema);
